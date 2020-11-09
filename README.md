@@ -7,7 +7,7 @@
 
 **Содержимое gulpfile.js**
 - scssPath содержит путь к main.scss - где подключаем ВСЕ SCSS стили через import.
-- scssAllFilesPath содержит все пути к SCSS файлам, для слежки(watch) за ними за ними.
+- scssAllFilesPath содержит все пути к SCSS файлам, для слежки(watch) за ними.
 
 
 **telegram: https://t.me/html_mentor**
