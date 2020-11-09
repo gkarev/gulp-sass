@@ -9,13 +9,13 @@
 - scssPath содержит путь к main.scss - где подключаем ВСЕ SCSS стили через import.
 - scssAllFilesPath содержит все пути к SCSS файлам, для слежки(watch) за ними.
 
-
-**telegram: https://t.me/html_mentor**
-
-**instagram:** **@html.metor**
-
-**> Внимание! Убедитесь, что у вас установлен NodeJS(рекомендованная версия)**
+** > Внимание! Убедитесь, что у вас установлен NodeJS(рекомендованная версия)**
 **https://nodejs.org/ru/download/**
 
-**> Скачать редактор как у меня можно тут:**
+** > Скачать редактор как у меня можно тут:**
 **https://code.visualstudio.com/**
+
+
+---
+**telegram: https://t.me/html_mentor**
+**instagram:** **@html.metor**
