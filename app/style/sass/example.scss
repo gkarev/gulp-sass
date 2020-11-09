@@ -1,0 +1,21 @@
+.example{
+    width: 200px;
+    height: 200px;
+    background-color: green;
+    animation: hue 4s ease infinite alternate;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font: bold 20px/24px Arial, sans-serif;
+    margin: 100px auto;
+    &:before{
+        content: attr(class);
+    }
+}
+
+@keyframes hue{ 
+    100%{
+        filter: hue-rotate(360deg);
+        border-radius: 50%;
+    }
+}
