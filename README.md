@@ -19,4 +19,4 @@
 
 ---
 **telegram: https://t.me/html_mentor**  
-**instagram:** **@html.metor**
+**instagram:** **[@html.metor](https://www.instagram.com/html.mentor)**
