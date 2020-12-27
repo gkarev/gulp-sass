@@ -18,5 +18,6 @@
 
 
 ---
-**telegram: https://t.me/html_mentor**  
-**instagram:** **[@html.metor](https://www.instagram.com/html.mentor)**
+подиписвайся:
+**telegram:** **[@html.mentor](https://t.me/html_mentor)**
+**instagram:** **[@html.mentor](https://www.instagram.com/html.mentor)**
