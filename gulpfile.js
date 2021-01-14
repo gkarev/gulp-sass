@@ -40,8 +40,10 @@ function html() {
 function watch() {
     browserSync.init({
         port: 3010,
+        reloadOnRestart: true,
         server: {
-            baseDir: './build'
+            baseDir: './build',
+            directory: true
         }
     });
 
