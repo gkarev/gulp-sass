@@ -3,7 +3,7 @@ const del = require('del');
 const sass = require('gulp-sass');
 const htmlmin = require('gulp-htmlmin');
 const imagemin = require('gulp-imagemin');
-const uglify = require('gulp-uglify');
+const uglify = require('gulp-uglify-es').default;
 const cleanCSS = require('gulp-clean-css');
 const include = require('gulp-file-include');
 const sync = require('browser-sync').create();
@@ -45,7 +45,6 @@ function img() {
         }))
         .pipe(dest('build/img'))
 };
-
 
 function clear() {
     return del('build')

@@ -18,7 +18,7 @@
     "gulp-htmlmin": "^5.0.1",
     "gulp-imagemin": "^7.1.0",
     "gulp-sass": "^4.1.0",
-    "gulp-uglify": "^3.0.2",
+    "gulp-uglify-es": "^2.0.0",
     "node-sass": "^5.0.0"
   }
 }
