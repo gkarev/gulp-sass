@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/main.css">
+    <!-- meta, title, css -->
+    @@include('page/head-data.html')
 </head>
 <body>
-    @@include('views/header.html')
-    <h1>Привет МИРЪ!</h1>
-    @@include('views/footer.html')
-</body>
-</html>
+
+    @@include('blocks/header.html')
+ 
+    <p>тут пишем код</p>
+ 
+    <img width="400" src="img/mentor.jpg" alt="mentor picture">
+
+    @@include('blocks/footer.html')
+
+<!-- js -->
+<script src="js/main.js"></script>
+<body>  
