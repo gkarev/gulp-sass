@@ -6,13 +6,18 @@ const imagemin = require('gulp-imagemin');
 const uglify = require('gulp-uglify-es').default;
 const cleanCSS = require('gulp-clean-css');
 const include = require('gulp-file-include');
+const replace = require('gulp-replace');
+const webp = require('gulp-webp');
+const webpHTML = require('gulp-webp-html');
 const sync = require('browser-sync').create();
 
 
 function html() {
     return src(['./app/html/**.html'])
         .pipe(include())
+        .pipe(replace('../', '/'))
         .pipe(htmlmin({ collapseWhitespace: true }))
+        // .pipe(webpHTML())
         .pipe(dest('./build'))
 }
 
@@ -20,6 +25,7 @@ function scss() {
     return src('app/scss/main.scss')
         .pipe(sass())
         .pipe(cleanCSS({ level: 2 }))
+        .pipe(replace('../../', '../'))
         .pipe(dest('build/css'))
         .pipe(sass().on('error', sass.logError))
 };
@@ -43,7 +49,15 @@ function img() {
                 { removeViewBox: false }
             ]
         }))
+        // .pipe(webp({ quality: 70 }))
         .pipe(dest('build/img'))
+};
+
+
+
+function fonts() {
+    return src('app/fonts/**/*')
+        .pipe(dest('build/fonts'))
 };
 
 function clear() {
@@ -64,9 +78,10 @@ function serve() {
     watch('app/scss/**/*.scss', series(scss)).on('change', sync.reload)
     watch('app/js/**/*.js', series(js)).on('change', sync.reload)
     watch('app/img/**/*', series(img)).on('change', sync.reload)
+    watch('app/fonts/**/*', series(fonts)).on('change', sync.reload)
 };
 
 
-exports.build = series(clear, scss, js, img, html)
-exports.watch = series(clear, scss, js, img, html, serve)
+exports.build = series(clear, scss, js, img, fonts, html)
+exports.watch = series(clear, scss, js, img, fonts, html, serve)
 exports.clear = clear;
