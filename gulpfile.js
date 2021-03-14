@@ -12,10 +12,11 @@ const webpHTML = require('gulp-webp-html');
 const sync = require('browser-sync').create();
 
 
+
 function html() {
     return src(['./app/html/**.html'])
         .pipe(include())
-        .pipe(replace('../', '/'))
+        .pipe(replace('../', ''))
         .pipe(htmlmin({ collapseWhitespace: true }))
         // .pipe(webpHTML())
         .pipe(dest('./build'))
@@ -52,8 +53,6 @@ function img() {
         // .pipe(webp({ quality: 70 }))
         .pipe(dest('build/img'))
 };
-
-
 
 function fonts() {
     return src('app/fonts/**/*')
