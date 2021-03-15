@@ -1,2 +1,2 @@
 //тут подключаем файлы JS, никаких разделителей в конце строки не ставить!
-_include("scripts/test.js")
+@@include("scripts/test.js")

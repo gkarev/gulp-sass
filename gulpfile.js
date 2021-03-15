@@ -16,8 +16,9 @@ const sync = require('browser-sync').create();
 function html() {
     return src(['./app/html/**.html'])
         .pipe(include())
-        .pipe(replace('../', ''))
+        .pipe(replace(/\.\.\//g, ''))
         .pipe(htmlmin({ collapseWhitespace: true }))
+        //раскоментрировать если нужен webp внутри тега picture
         // .pipe(webpHTML())
         .pipe(dest('./build'))
 }
@@ -26,7 +27,7 @@ function scss() {
     return src('app/scss/main.scss')
         .pipe(sass())
         .pipe(cleanCSS({ level: 2 }))
-        .pipe(replace('../../', '../'))
+        .pipe(replace(/^\.\.\//g, ''))
         .pipe(dest('build/css'))
         .pipe(sass().on('error', sass.logError))
 };
@@ -34,7 +35,7 @@ function scss() {
 function js() {
     return src('app/js/main.js')
         .pipe(include({
-            prefix: '_'
+            prefix: '@@'
         }))
         .pipe(uglify())
         .pipe(dest('build/js'))
@@ -50,6 +51,8 @@ function img() {
                 { removeViewBox: false }
             ]
         }))
+        //раскоментрировать если нужен webp
+        // .pipe(dest('build/img'))
         // .pipe(webp({ quality: 70 }))
         .pipe(dest('build/img'))
 };
