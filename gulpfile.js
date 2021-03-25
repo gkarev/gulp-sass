@@ -17,7 +17,8 @@ function html() {
     return src(['./app/html/**.html'])
         .pipe(include())
         .pipe(replace(/\.\.\//g, ''))
-        .pipe(htmlmin({ collapseWhitespace: true }))
+        //раскоментрировать если нужен сжатый html файл
+        // .pipe(htmlmin({ collapseWhitespace: true }))
         //раскоментрировать если нужен webp внутри тега picture
         // .pipe(webpHTML())
         .pipe(dest('./build'))
