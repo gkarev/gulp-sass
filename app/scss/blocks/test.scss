@@ -1,6 +1,38 @@
-body{
-    font-family: "Roboto";
-    color: #333; 
+// ПРИМЕР СТИЛЕЙ, И ПУТЕЙ К ФАЙЛАМ КАРТИНОК, ПЕРЕД НАЧАЛОМ РАБОТЫ УДАЛИТЬ
+
+.test{
+    font-family: $basic-family;
     background-color: $body-bg;
+    height: 100vh;
+    display: grid;
+    grid-auto-rows: min-content 1fr min-content;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 24px;
 }
 
+.test header{
+    padding: 20px;
+    background-color: bisque;
+}
+
+.test footer{
+    padding: 20px;
+    background-color: rgb(253, 206, 147);
+}
+
+.test__img{
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.test__pic{
+    background: url("../img/mentor.jpg") no-repeat center center/cover;
+}
+
+.test__content{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+}

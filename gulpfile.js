@@ -1,24 +1,19 @@
 const { src, dest, series, watch } = require('gulp');
 const del = require('del');
 const sass = require('gulp-sass');
-const htmlmin = require('gulp-htmlmin');
 const imagemin = require('gulp-imagemin');
 const uglify = require('gulp-uglify-es').default;
 const cleanCSS = require('gulp-clean-css');
 const include = require('gulp-file-include');
-const replace = require('gulp-replace');
 const webp = require('gulp-webp');
 const webpHTML = require('gulp-webp-html');
 const sync = require('browser-sync').create();
 
-const buildFolder = './docs'; //папка куда собирается проект (указываем docs, если нужен gitHubPage)
+const buildFolder = 'docs'; //папка куда собирается проект (указываем docs, если нужен gitHubPage, дополнительно нужно указать в настройках gitHub)
 
 function html() {
     return src(['./app/html/**.html'])
         .pipe(include())
-        .pipe(replace(/\.\.\//g, ''))
-        //раскоментрировать если нужен сжатый html файл
-        // .pipe(htmlmin({ collapseWhitespace: true }))
         //раскоментрировать если нужен webp внутри тега picture
         // .pipe(webpHTML())
         .pipe(dest(buildFolder))
@@ -28,7 +23,6 @@ function scss() {
     return src('app/scss/main.scss')
         .pipe(sass())
         .pipe(cleanCSS({ level: 2 }))
-        .pipe(replace(/^\.\.\//g, ''))
         .pipe(dest(buildFolder + '/css'))
         .pipe(sass().on('error', sass.logError))
 };
