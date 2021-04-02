@@ -11,7 +11,7 @@ const webp = require('gulp-webp');
 const webpHTML = require('gulp-webp-html');
 const sync = require('browser-sync').create();
 
-
+const buildFolder = 'docs'; //папка куда собирается проект (указываем docs, если нужен gitHubPage)
 
 function html() {
     return src(['./app/html/**.html'])
@@ -21,7 +21,7 @@ function html() {
         // .pipe(htmlmin({ collapseWhitespace: true }))
         //раскоментрировать если нужен webp внутри тега picture
         // .pipe(webpHTML())
-        .pipe(dest('./build'))
+        .pipe(dest(buildFolder))
 }
 
 function scss() {
@@ -29,7 +29,7 @@ function scss() {
         .pipe(sass())
         .pipe(cleanCSS({ level: 2 }))
         .pipe(replace(/^\.\.\//g, ''))
-        .pipe(dest('build/css'))
+        .pipe(dest(buildFolder + '/css'))
         .pipe(sass().on('error', sass.logError))
 };
 
@@ -39,7 +39,7 @@ function js() {
             prefix: '@@'
         }))
         .pipe(uglify())
-        .pipe(dest('build/js'))
+        .pipe(dest(buildFolder + '/js'))
 };
 
 function img() {
@@ -55,16 +55,16 @@ function img() {
         //раскоментрировать если нужен webp
         // .pipe(dest('build/img'))
         // .pipe(webp({ quality: 70 }))
-        .pipe(dest('build/img'))
+        .pipe(dest(buildFolder + '/img'))
 };
 
 function fonts() {
     return src('app/fonts/**/*')
-        .pipe(dest('build/fonts'))
+        .pipe(dest(buildFolder + '/fonts'))
 };
 
 function clear() {
-    return del('build')
+    return del(buildFolder)
 };
 
 function serve() {
@@ -72,7 +72,7 @@ function serve() {
         port: 3010,
         reloadOnRestart: true,
         server: {
-            baseDir: './build',
+            baseDir: buildFolder,
             directory: true
         }
     });
