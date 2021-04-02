@@ -11,7 +11,7 @@ const webp = require('gulp-webp');
 const webpHTML = require('gulp-webp-html');
 const sync = require('browser-sync').create();
 
-const buildFolder = 'docs'; //папка куда собирается проект (указываем docs, если нужен gitHubPage)
+const buildFolder = './docs'; //папка куда собирается проект (указываем docs, если нужен gitHubPage)
 
 function html() {
     return src(['./app/html/**.html'])
