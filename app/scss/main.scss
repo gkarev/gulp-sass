@@ -1,7 +1,12 @@
 @import "variables"; //пишем переменные
 
 @import "reset"; //сборс стилей
-@import "fonts"; //подключаем шрифты (локально)
-
-//подключаем БЭМ блоки
-@import "blocks/test";
+@import "fonts"; //подключаем шрифты
+@import "mixins"; //подключаем миксины
+// @import "animate.css";
+// @import "lightgallery.css";
+//подключаем основные стили сайта(блоки)
+@import "bem";
+@import "blocks/header";
+@import "blocks/style";
+@import "blocks/footer";

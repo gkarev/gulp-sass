@@ -1,39 +1,65 @@
 const { src, dest, series, watch } = require('gulp');
 const del = require('del');
 const sass = require('gulp-sass');
+const htmlmin = require('gulp-htmlmin');
+const webpack = require('webpack-stream');
+const rename = require('gulp-rename');
+
 const imagemin = require('gulp-imagemin');
 const uglify = require('gulp-uglify-es').default;
 const cleanCSS = require('gulp-clean-css');
 const include = require('gulp-file-include');
+const replace = require('gulp-replace');
 const webp = require('gulp-webp');
 const webpHTML = require('gulp-webp-html');
+const babel = require('gulp-babel');
+const fileinclude = require('gulp-file-include');
 const sync = require('browser-sync').create();
 
-const buildFolder = 'docs'; //папка куда собирается проект (указываем docs, если нужен gitHubPage, дополнительно нужно указать в настройках gitHub)
+
 
 function html() {
     return src(['./app/html/**.html'])
         .pipe(include())
-        //раскоментрировать если нужен webp внутри тега picture
-        // .pipe(webpHTML())
-        .pipe(dest(buildFolder))
+        .pipe(replace('../', ''))
+        .pipe(webpHTML())
+        // .pipe(htmlmin({ collapseWhitespace: true }))
+        .pipe(dest('./build'))
 }
 
 function scss() {
     return src('app/scss/main.scss')
         .pipe(sass())
         .pipe(cleanCSS({ level: 2 }))
-        .pipe(dest(buildFolder + '/css'))
+        .pipe(replace('../../', '../'))
+        .pipe(dest('build/css'))
         .pipe(sass().on('error', sass.logError))
 };
 
 function js() {
-    return src('app/js/main.js')
-        .pipe(include({
-            prefix: '@@'
-        }))
-        .pipe(uglify())
-        .pipe(dest(buildFolder + '/js'))
+    return src('app/js/*.js')
+        .pipe(webpack({
+            mode: 'production',
+            performance: { hints: false },
+            module: {
+                rules: [
+                    {
+                        test: /\.(js)$/,
+                        exclude: /(node_modules)/,
+                        loader: 'babel-loader',
+                        query: {
+                            presets: ['@babel/env'],
+                            plugins: ['babel-plugin-root-import']
+                        }
+                    }
+                ]
+            }
+        })).on('error', function handleError() {
+            this.emit('end')
+        })
+        .pipe(rename('app.min.js'))
+        .pipe(dest('build/js'))
+
 };
 
 function img() {
@@ -46,19 +72,20 @@ function img() {
                 { removeViewBox: false }
             ]
         }))
-        //раскоментрировать если нужен webp
-        // .pipe(dest('build/img'))
-        // .pipe(webp({ quality: 70 }))
-        .pipe(dest(buildFolder + '/img'))
+        .pipe(dest('build/img'))
+        .pipe(webp({ quality: 70 }))
+        .pipe(dest('build/img'))
 };
+
+
 
 function fonts() {
     return src('app/fonts/**/*')
-        .pipe(dest(buildFolder + '/fonts'))
+        .pipe(dest('build/fonts'))
 };
 
 function clear() {
-    return del(buildFolder)
+    return del('build')
 };
 
 function serve() {
@@ -66,7 +93,7 @@ function serve() {
         port: 3010,
         reloadOnRestart: true,
         server: {
-            baseDir: buildFolder,
+            baseDir: './build',
             directory: true
         }
     });

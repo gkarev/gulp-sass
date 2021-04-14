@@ -2,31 +2,21 @@
 <html lang="ru">
 
 <head>
-    <!-- подключаем meta, title, css -->
+    <!-- meta, title, css -->
     @@include('page/head-data.html')
 </head>
 
 <body>
 
-    <!-- пример подключения картинок, и html-блоков, удалить перед началом работы -->
-    <div class="test">
-        
-        <!-- подключаем шапку -->
-        @@include('blocks/header.html')
+    @@include('blocks/header.html')
 
-        <div class="test__content">
-            <img class="test__img" src="img/mentor.jpg" alt="mentor picture">
-            <div class="test__pic"></div>
-        </div>
+    <p>тут пишем код</p>
+    <div class="form"></div>
+    <img width="400" src="../img/mentor.jpg" alt="mentor picture">
+    <p>тут ../</p>
+    @@include('blocks/footer.html')
 
-        <!-- подключаем подвал -->
-        @@include('blocks/footer.html')
+    <!-- js -->
+    @@include('page/scripts.html')
 
-    </div>
-
-
-    <!-- подключаем js -->
-    <script src="js/main.js"></script>
-</body>
-
-</html>
+    <body>
