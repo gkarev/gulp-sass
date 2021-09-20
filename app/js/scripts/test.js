@@ -1,1 +1,3 @@
-console.log('hello');
+export function testFunction(){
+    console.log('done!');
+}

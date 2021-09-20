@@ -9,15 +9,15 @@ const webp = require('gulp-webp');
 const webpHTML = require('gulp-webp-html');
 const sync = require('browser-sync').create();
 
+const webpackStream = require('webpack-stream');
 const buildFolder = 'docs'; //папка куда собирается проект (указываем docs, если нужен gitHubPage, дополнительно нужно указать в настройках gitHub)
 
 function html() {
     return src(['./app/html/**.html'])
         .pipe(include())
-        //раскоментрировать если нужен webp внутри тега picture
-        // .pipe(webpHTML())
+        .pipe(webpHTML())
         .pipe(dest(buildFolder))
-}
+};
 
 function scss() {
     return src('app/scss/main.scss')
@@ -29,9 +29,29 @@ function scss() {
 
 function js() {
     return src('app/js/main.js')
-        .pipe(include({
-            prefix: '@@'
+        .pipe(webpackStream({
+            mode: 'none',
+            output: {
+                filename: 'main.js',
+            },
+            module: {
+                rules: [
+                    {
+                        test: /\.m?js$/,
+                        exclude: /node_modules/,
+                        use: {
+                            loader: 'babel-loader',
+                            options: {
+                                presets: [
+                                    ['@babel/preset-env', { targets: "defaults" }]
+                                ]
+                            }
+                        }
+                    }
+                ]
+            }
         }))
+
         .pipe(uglify())
         .pipe(dest(buildFolder + '/js'))
 };
@@ -47,8 +67,8 @@ function img() {
             ]
         }))
         //раскоментрировать если нужен webp
-        // .pipe(dest('build/img'))
-        // .pipe(webp({ quality: 70 }))
+        .pipe(dest(buildFolder + '/img'))
+        .pipe(webp({ quality: 65 }))
         .pipe(dest(buildFolder + '/img'))
 };
 
