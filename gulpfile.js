@@ -4,18 +4,16 @@ const sass = require('gulp-sass');
 const imagemin = require('gulp-imagemin');
 const uglify = require('gulp-uglify-es').default;
 const cleanCSS = require('gulp-clean-css');
-const include = require('gulp-file-include');
 const webp = require('gulp-webp');
-const webpHTML = require('gulp-webp-html');
 const sync = require('browser-sync').create();
+const gulpPug = require('gulp-pug');
 
 const webpackStream = require('webpack-stream');
 const buildFolder = 'docs'; //папка куда собирается проект (указываем docs, если нужен gitHubPage, дополнительно нужно указать в настройках gitHub)
 
-function html() {
-    return src(['./app/html/**.html'])
-        .pipe(include())
-        .pipe(webpHTML())
+function pug() {
+    return src(['./app/pug/**.pug'])
+        .pipe(gulpPug())
         .pipe(dest(buildFolder))
 };
 
@@ -91,7 +89,7 @@ function serve() {
         }
     });
 
-    watch('app/html/**/*.html', series(html)).on('change', sync.reload)
+    watch('app/pug/**/*.pug', series(pug)).on('change', sync.reload)
     watch('app/scss/**/*.scss', series(scss)).on('change', sync.reload)
     watch('app/js/**/*.js', series(js)).on('change', sync.reload)
     watch('app/img/**/*', series(img)).on('change', sync.reload)
@@ -99,6 +97,6 @@ function serve() {
 };
 
 
-exports.build = series(clear, scss, js, img, fonts, html)
-exports.watch = series(clear, scss, js, img, fonts, html, serve)
+exports.build = series(clear, scss, js, img, fonts, pug,)
+exports.watch = series(clear, scss, js, img, fonts, pug, serve)
 exports.clear = clear;
