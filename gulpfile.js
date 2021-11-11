@@ -7,6 +7,9 @@ const cleanCSS = require('gulp-clean-css');
 const include = require('gulp-file-include');
 const webp = require('gulp-webp');
 const webpHTML = require('gulp-webp-html');
+const svgstore = require('gulp-svgstore');
+const rename = require('gulp-rename');
+
 const sync = require('browser-sync').create();
 
 const webpackStream = require('webpack-stream');
@@ -17,6 +20,16 @@ function html() {
         .pipe(include())
         .pipe(webpHTML())
         .pipe(dest(buildFolder))
+};
+
+function sprite() {
+    return src(['./app/img/svg/**/*.svg'])
+        .pipe(svgstore({
+            inlineSvg: true
+        }))
+
+        .pipe(rename("sprite.svg"))
+        .pipe(dest(buildFolder + '/img/svg'))
 };
 
 function scss() {
@@ -95,10 +108,11 @@ function serve() {
     watch('app/scss/**/*.scss', series(scss)).on('change', sync.reload)
     watch('app/js/**/*.js', series(js)).on('change', sync.reload)
     watch('app/img/**/*', series(img)).on('change', sync.reload)
+    watch('app/img/svg/**/*', series(sprite)).on('change', sync.reload)
     watch('app/fonts/**/*', series(fonts)).on('change', sync.reload)
 };
 
 
-exports.build = series(clear, scss, js, img, fonts, html)
-exports.watch = series(clear, scss, js, img, fonts, html, serve)
+exports.build = series(clear, scss, js, img, sprite, fonts, html)
+exports.watch = series(clear, scss, js, img, sprite, fonts, html, serve)
 exports.clear = clear;
