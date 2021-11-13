@@ -9,21 +9,25 @@ const webp = require('gulp-webp');
 const webpHTML = require('gulp-webp-html');
 const svgstore = require('gulp-svgstore');
 const rename = require('gulp-rename');
-
+const cachebust = require('gulp-cache-bust');
 const sync = require('browser-sync').create();
-
 const webpackStream = require('webpack-stream');
+
+const sourceFolder = 'app'; //папка куда собираем все исходники проекта (html, scss, js, img и т.п.)
 const buildFolder = 'docs'; //папка куда собирается проект (указываем docs, если нужен gitHubPage, дополнительно нужно указать в настройках gitHub)
 
 function html() {
-    return src(['./app/html/**.html'])
+    return src([sourceFolder + '/html/**.html'])
         .pipe(include())
         .pipe(webpHTML())
+        .pipe(cachebust({
+            type: 'timestamp'
+        }))
         .pipe(dest(buildFolder))
 };
 
 function sprite() {
-    return src(['./app/img/svg/**/*.svg'])
+    return src([sourceFolder + '/img/svg/**/*.svg'])
         .pipe(svgstore({
             inlineSvg: true
         }))
@@ -33,7 +37,7 @@ function sprite() {
 };
 
 function scss() {
-    return src('app/scss/main.scss')
+    return src(sourceFolder + '/scss/main.scss')
         .pipe(sass())
         .pipe(cleanCSS({ level: 2 }))
         .pipe(dest(buildFolder + '/css'))
@@ -41,7 +45,7 @@ function scss() {
 };
 
 function js() {
-    return src('app/js/main.js')
+    return src(sourceFolder + '/js/main.js')
         .pipe(webpackStream({
             mode: 'none',
             output: {
@@ -70,7 +74,7 @@ function js() {
 };
 
 function img() {
-    return src('app/img/**/*')
+    return src(sourceFolder + '/img/**/*')
         .pipe(imagemin({
             interlaced: false,
             progressive: false,
@@ -86,7 +90,7 @@ function img() {
 };
 
 function fonts() {
-    return src('app/fonts/**/*')
+    return src(sourceFolder + '/fonts/**/*')
         .pipe(dest(buildFolder + '/fonts'))
 };
 
@@ -104,12 +108,12 @@ function serve() {
         }
     });
 
-    watch('app/html/**/*.html', series(html)).on('change', sync.reload)
-    watch('app/scss/**/*.scss', series(scss)).on('change', sync.reload)
-    watch('app/js/**/*.js', series(js)).on('change', sync.reload)
-    watch('app/img/**/*', series(img)).on('change', sync.reload)
-    watch('app/img/svg/**/*', series(sprite)).on('change', sync.reload)
-    watch('app/fonts/**/*', series(fonts)).on('change', sync.reload)
+    watch(sourceFolder + '/html/**/*.html', series(html)).on('change', sync.reload)
+    watch(sourceFolder + '/scss/**/*.scss', series(scss, html)).on('change', sync.reload)
+    watch(sourceFolder + '/js/**/*.js', series(js)).on('change', sync.reload)
+    watch(sourceFolder + '/img/**/*', series(img)).on('change', sync.reload)
+    watch(sourceFolder + '/img/svg/**/*', series(sprite)).on('change', sync.reload)
+    watch(sourceFolder + '/fonts/**/*', series(fonts)).on('change', sync.reload)
 };
 
 
