@@ -4,15 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "editorconfig": "editorconfig-cli",
+    "stylelint": "stylelint --config stylelint.js \"app/scss/**/*.scss\" --customSyntax postcss-scss --fix",
+    "test": "npm run editorconfig && npm run stylelint",
+    "start": "gulp watch"
   },
   "author": "instagram: @html.mentor",
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.15.5",
-    "@babel/preset-env": "^7.15.6",
-    "babel-loader": "^8.2.2",
-    "browser-sync": "^2.27.5",
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.0",
+    "@htmlacademy/editorconfig-cli": "^1.0.0",
+    "babel-loader": "^8.2.3",
+    "browser-sync": "^2.27.7",
     "del": "^6.0.0",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^7.0.1",
@@ -21,15 +25,22 @@
     "gulp-file-include": "^2.3.0",
     "gulp-imagemin": "^7.1.0",
     "gulp-rename": "^2.0.0",
-    "gulp-sass": "^4.1.0",
+    "gulp-sass": "^4.1.1",
     "gulp-svgstore": "^8.0.0",
     "gulp-uglify-es": "^2.0.0",
     "node-sass": "^5.0.0",
-    "webpack": "^5.53.0",
+    "postcss-scss": "^4.0.2",
+    "stylelint": "^14.1.0",
+    "stylelint-config-standard-scss": "^2.0.1",
+    "webpack": "^5.64.0",
     "webpack-stream": "^7.0.0"
   },
   "dependencies": {
     "gulp-webp": "^4.0.1",
     "gulp-webp-html": "^1.0.2"
-  }
+  },
+  "editorconfig-cli": [
+    "app/html/**/*.html",
+    "app/scss/**/*.scss"
+  ]
 }
