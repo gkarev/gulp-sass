@@ -11,11 +11,11 @@
 }
 .test header {
   padding: 20px;
-  background-color: rgb(78, 209, 154);
+  background-color: rgb(78 209 154);
 }
 .test footer {
   padding: 20px;
-  background-color: rgb(253, 206, 147);
+  background-color: rgb(253 206 147);
 }
 .test__img {
   max-width: 100%;
@@ -30,3 +30,4 @@
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 20px;
 }
+

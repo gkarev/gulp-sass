@@ -1,12 +1,11 @@
 const { src, dest, series, watch } = require('gulp');
 const del = require('del');
-const sass = require('gulp-sass');
-const imagemin = require('gulp-imagemin');
+const sass = require('gulp-dart-sass');
+const squoosh = require('gulp-squoosh');
 const uglify = require('gulp-uglify-es').default;
 const cleanCSS = require('gulp-clean-css');
 const include = require('gulp-file-include');
-const webp = require('gulp-webp');
-const webpHTML = require('gulp-webp-html-fix');
+const webpHTML = require('gulp-xv-webp-html');
 const svgstore = require('gulp-svgstore');
 const rename = require('gulp-rename');
 const cachebust = require('gulp-cache-bust');
@@ -35,13 +34,13 @@ function bem() {
 };
 
 function sprite() {
-    return src([sourceFolder + '/img/svg/**/*.svg'])
+    return src([sourceFolder + '/img/icons/**/*.svg'])
         .pipe(svgstore({
             inlineSvg: true
         }))
 
         .pipe(rename("sprite.svg"))
-        .pipe(dest(buildFolder + '/img/svg'))
+        .pipe(dest(buildFolder + '/img/icons'))
 };
 
 function scss() {
@@ -50,6 +49,12 @@ function scss() {
         .pipe(cleanCSS({ level: 2 }))
         .pipe(dest(buildFolder + '/css'))
         .pipe(sass().on('error', sass.logError))
+};
+
+
+function video() {
+    return src(['./*.mp4'])
+        .pipe(dest(buildFolder))
 };
 
 function js() {
@@ -82,19 +87,19 @@ function js() {
 };
 
 function img() {
-    return src(sourceFolder + '/img/**/*')
-        .pipe(imagemin({
-            interlaced: false,
-            progressive: false,
-            optimizationLevel: 3,
-            svgoPlugins: [
-                { removeViewBox: false }
-            ]
-        }))
-        //раскоментрировать если нужен webp
-        .pipe(dest(buildFolder + '/img'))
-        .pipe(webp({ quality: 65 }))
-        .pipe(dest(buildFolder + '/img'))
+  return src( [
+    sourceFolder + "/img/**/*.jpg",
+    sourceFolder + "/img/**/*.png"
+  ])
+    .pipe(
+      squoosh(() => ({
+        encodeOptions: {
+          mozjpeg: {},
+          webp: {}
+        },
+      }))
+    )
+    .pipe(dest(buildFolder + "/img"));
 };
 
 function fonts() {
@@ -120,7 +125,7 @@ function serve() {
     watch(sourceFolder + '/scss/**/*.scss', series(scss, html)).on('change', sync.reload)
     watch(sourceFolder + '/js/**/*.js', series(js)).on('change', sync.reload)
     watch(sourceFolder + '/img/**/*', series(img)).on('change', sync.reload)
-    watch(sourceFolder + '/img/svg/**/*', series(sprite)).on('change', sync.reload)
+    watch(sourceFolder + '/img/icons/**/*', series(sprite)).on('change', sync.reload)
     watch(sourceFolder + '/fonts/**/*', series(fonts)).on('change', sync.reload)
 };
 
@@ -128,4 +133,5 @@ function serve() {
 exports.build = series(clear, scss, js, img, sprite, fonts, html);
 exports.watch = series(clear, scss, js, img, sprite, fonts, html, serve);
 exports.bem = bem;
+exports.video = video;
 exports.clear = clear;

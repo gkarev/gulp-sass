@@ -7,7 +7,7 @@ module.exports = {
 
   rules: {
     'scss/double-slash-comment-whitespace-inside': "never",
-    "selector-class-pattern": "^(?:(?:o|c|u|t|s|is|has|_|js|qa)-)?[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*(?:__[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*)?(?:--[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*)?(?:\\[.+\\])?$",
+    "selector-class-pattern":["^[A-Z]+$", {resolveNestedSelectors: true}],
     "comment-whitespace-inside": "never",
     "comment-empty-line-before": "never",
     'font-family-no-missing-generic-family-keyword': true,
