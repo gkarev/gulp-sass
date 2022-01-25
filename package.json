@@ -20,6 +20,7 @@
     "browser-sync": "^2.27.7",
     "del": "^6.0.0",
     "gulp": "^4.0.2",
+    "gulp-avif-webp": "^1.0.1",
     "gulp-cache-bust": "^1.4.1",
     "gulp-clean-css": "^4.3.0",
     "gulp-dart-sass": "^1.0.2",
@@ -32,7 +33,6 @@
     "gulp-svgstore": "^8.0.0",
     "gulp-uglify-es": "^2.0.0",
     "gulp-util": "^3.0.8",
-    "gulp-xv-webp-html": "^1.1.2",
     "postcss": "^8.3.11",
     "postcss-scss": "^4.0.2",
     "stylelint": "^14.1.0",
@@ -43,5 +43,6 @@
   "editorconfig-cli": [
     "app/html/**/*.html",
     "app/scss/**/*.scss"
-  ]
+  ],
+  "dependencies": {}
 }

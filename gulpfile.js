@@ -5,7 +5,7 @@ const squoosh = require('gulp-squoosh');
 const uglify = require('gulp-uglify-es').default;
 const cleanCSS = require('gulp-clean-css');
 const include = require('gulp-file-include');
-const webpHTML = require('gulp-xv-webp-html');
+const webpHTML = require('gulp-avif-webp');
 const svgstore = require('gulp-svgstore');
 const svgmin = require('gulp-svgmin');
 const rename = require('gulp-rename');
@@ -97,7 +97,8 @@ function img() {
       squoosh(() => ({
         encodeOptions: {
           mozjpeg: {},
-          webp: {}
+          webp: {},
+          avif: {}
         },
       }))
     )
