@@ -5,7 +5,7 @@ const squoosh = require('gulp-squoosh');
 const uglify = require('gulp-uglify-es').default;
 const cleanCSS = require('gulp-clean-css');
 const include = require('gulp-file-include');
-const webpHTML = require('gulp-avif-webp');
+// const webpAvifHTML = require('gulp-avif-webp-html');
 const svgstore = require('gulp-svgstore');
 const svgmin = require('gulp-svgmin');
 const rename = require('gulp-rename');
@@ -18,9 +18,9 @@ const sourceFolder = 'app'; //папка куда собираем все исх
 const buildFolder = 'docs'; //папка куда собирается проект (указываем docs, если нужен gitHubPage, дополнительно нужно указать в настройках gitHub)
 
 function html() {
-  return src([sourceFolder + '/html/**.html'])
+  return src(sourceFolder + '/html/**.html')
     .pipe(include())
-    .pipe(webpHTML())
+    // .pipe(webpAvifHTML())
     .pipe(gulpHtmlBemValidator())
     .pipe(cachebust({
       type: 'timestamp'
@@ -29,19 +29,19 @@ function html() {
 };
 
 function bem() {
-  return src([sourceFolder + '/html/**.html'])
+  return src(sourceFolder + '/html/**.html')
     .pipe(gulpHtmlBemValidator())
     .pipe(dest(buildFolder))
 };
 
 function svg() {
-  return src([sourceFolder + '/img/**/*.svg'])
+  return src(sourceFolder + '/img/**/*.svg')
     .pipe(svgmin())
     .pipe(dest(buildFolder + '/img'))
 };
 
 function sprite() {
-  return src([sourceFolder + '/img/icons/**/*.svg'])
+  return src(sourceFolder + '/img/icons/**/*.svg')
     .pipe(svgstore({
       inlineSvg: true
     }))
@@ -57,7 +57,6 @@ function scss() {
     .pipe(dest(buildFolder + '/css'))
     .pipe(sass().on('error', sass.logError))
 };
-
 
 function js() {
   return src(sourceFolder + '/js/main.js')
@@ -89,14 +88,11 @@ function js() {
 };
 
 function img() {
-  return src([
-    sourceFolder + "/img/**/*.jpg",
-    sourceFolder + "/img/**/*.png"
-  ])
+  return src(sourceFolder + '/img/**/*.{png,jpg}')
+    .pipe(dest(buildFolder + "/img"))
     .pipe(
       squoosh(() => ({
         encodeOptions: {
-          mozjpeg: {},
           webp: {},
           avif: {}
         },
