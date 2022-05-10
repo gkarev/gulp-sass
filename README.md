@@ -2,7 +2,7 @@
 > npm i
 
 **2. Запуск сборщика:**
-> npm start | npm run start
+> npm start
 ---
 
 
