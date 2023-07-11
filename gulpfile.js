@@ -114,9 +114,11 @@ function serve() {
   sync.init({
     port: 3010,
     reloadOnRestart: true,
+    open: false,
+
     server: {
       baseDir: buildFolder,
-      directory: true
+      directory: true,
     }
   });
 

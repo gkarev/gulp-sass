@@ -1,0 +1,14 @@
+version: '3'
+services:
+  node:
+    image: node:16.5-slim
+    container_name: gulp-sass
+    working_dir: /app
+    restart: always
+    ports:
+      - "3012:3010"
+    volumes:
+      - ./:/app
+    command: bash -c 'npm run start'
+
+
